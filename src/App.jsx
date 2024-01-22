@@ -11,7 +11,7 @@ function App() {
   const url = "https://pokeapi.co/api/v2/pokemon/";
 
   useEffect(() => {
-    fetch(`${url}${pokemonName}`)
+     fetch(`${url}${pokemonName}`)
       .then((response) => response.json())
       .then((data) => setData(data));
   }, [pokemonName]);
@@ -214,6 +214,7 @@ function App() {
                 imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
                 id={id}
                 weight={`${weight} lbs`}
+                // type={data.types[0].type.name}
               />
             </div>
           </div>
