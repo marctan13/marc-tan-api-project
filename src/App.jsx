@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import "bulma/css/bulma.css";
 import "./style.css";
@@ -10,17 +11,45 @@ function App() {
 
   const url = "https://pokeapi.co/api/v2/pokemon/";
 
-  useEffect(() => {
-     fetch(`${url}${pokemonName}`)
-      .then((response) => response.json())
+  useEffect( () => {
+      fetch(`${url}${pokemonName}`)
+      .then((response) => response.json()) //returns a promise
       .then((data) =>  setData(data));
   }, [pokemonName]);
+
+
+  //state variable for type
+  const [type, setType] = useState('');
+
+  useEffect(() =>{
+    const fetchType = async () => {
+      const result = await fetch(`${url}${pokemonName}`)
+      result.json().then(json => {
+        setType(json.types[0].type.name);
+      })
+    }
+      fetchType();
+  }, [pokemonName])
+
+  // const [ability, setAbilities] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchAbility = async () => {
+  //     const result = await fetch(`${url}${pokemonName}`)
+  //     result.json().then(json => {
+  //       setAbilities(json.abilities[0].map(data => {
+  //         data.ability.name
+  //       }))
+  //     })
+  //   }
+  //   fetchAbility()
+  // }, [pokemonName])
 
   //fetches other pokemon
   const [otherPokemon, setOtherPokemon] = useState([]);
 
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=1500&offset=0")
+    fetch(`${url}?limit=1500&offset=0`)
       .then((response) => response.json())
       .then((otherData) =>
          setOtherPokemon(otherData.results.map((p) => p.name))
@@ -92,6 +121,7 @@ function App() {
 
   console.log(pokemonName);
   console.log(data);
+  // console.log(ability)
   // console.log(data.abilities[0].ability.name)
   // console.log(data.types[0].type.name)
   // console.log(pokemonName);
@@ -202,7 +232,8 @@ function App() {
                 imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
                 id={id}
                 weight={`${weight} lbs`}
-                // type={data.types[0].type.name}
+                type={type}
+                // ability={ability}
               />
             </div>
           </div>
