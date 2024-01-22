@@ -10,15 +10,13 @@ function App() {
 
   const url = "https://pokeapi.co/api/v2/pokemon/";
 
-
   useEffect(() => {
-      fetch(`${url}${pokemonName}`)
-      .then((response) =>  response.json())
-      .then((data) =>  setData(data));
+    fetch(`${url}${pokemonName}`)
+      .then((response) => response.json())
+      .then((data) => setData(data));
   }, [pokemonName]);
 
-
-  //fetches other pokemon 
+  //fetches other pokemon
   const [otherPokemon, setOtherPokemon] = useState([]);
 
   useEffect(() => {
@@ -38,39 +36,28 @@ function App() {
   // })
   // setType(pokemonName.types[0].type.name)
 
-
   //GEN ONE
   function handleClick() {
     setPokemonName(
-      fetch(
-        `https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 151)}`
-      )
+      fetch(`${url}${Math.floor(Math.random() * 151)}`)
         .then((response) => response.json())
         .then((randomData) => setPokemonName(randomData.name))
     );
   }
 
-    //GEN TWO
+  //GEN TWO
   function handleClickTwo() {
     setPokemonName(
-      fetch(
-        `https://pokeapi.co/api/v2/pokemon/${
-          Math.floor(Math.random() * 99) + 151
-        }`
-      )
+      fetch(`${url}${Math.floor(Math.random() * 99) + 151}`)
         .then((response) => response.json())
         .then((randomData) => setPokemonName(randomData.name))
     );
   }
 
-//GEN THREE
+  //GEN THREE
   function handleClickThree() {
     setPokemonName(
-      fetch(
-        `https://pokeapi.co/api/v2/pokemon/${
-          Math.floor(Math.random() * 134) + 251
-        }`
-      )
+      fetch(`${url}${Math.floor(Math.random() * 134) + 251}`)
         .then((response) => response.json())
         .then((randomData) => setPokemonName(randomData.name))
     );
@@ -79,11 +66,7 @@ function App() {
   //GEN FOUR
   function handleClickFour() {
     setPokemonName(
-      fetch(
-        `https://pokeapi.co/api/v2/pokemon/${
-          Math.floor(Math.random() * 106) + 386
-        }`
-      )
+      fetch(`${url}${Math.floor(Math.random() * 106) + 386}`)
         .then((response) => response.json())
         .then((randomData) => setPokemonName(randomData.name))
     );
@@ -92,11 +75,7 @@ function App() {
   //GEN FIVE
   function handleClickFive() {
     setPokemonName(
-      fetch(
-        `https://pokeapi.co/api/v2/pokemon/${
-          Math.floor(Math.random() * 155) + 493
-        }`
-      )
+      fetch(`${url}${Math.floor(Math.random() * 155) + 493}`)
         .then((response) => response.json())
         .then((randomData) => setPokemonName(randomData.name))
     );
@@ -140,7 +119,7 @@ function App() {
   return (
     <div>
       <div className="container">
-        <h1 id='title'>Poke API Project</h1>
+        <h1 id="title">Poke API Project</h1>
         <section className="hero is-link">
           <div className="hero-body">
             <input
@@ -151,42 +130,22 @@ function App() {
               placeholder="Enter Pokemon Name"
             />
             <div>
-              <button
-                onClick={handleClick}
-                className="randomButton"
-                id="genOne"
-              >
+              <button onClick={handleClick} className="randomButton">
                 Generate Gen 1 Pokemon
               </button>
-              <button
-                onClick={handleClickTwo}
-                className="randomButton"
-                id="genOne"
-              >
+              <button onClick={handleClickTwo} className="randomButton">
                 Generate Gen 2 Pokemon
               </button>
-              <button
-                onClick={handleClickThree}
-                className="randomButton"
-                id="genOne"
-              >
+              <button onClick={handleClickThree} className="randomButton">
                 Generate Gen 3 Pokemon
               </button>
-              <button
-                onClick={handleClickFour}
-                className="randomButton"
-                id="genOne"
-              >
+              <button onClick={handleClickFour} className="randomButton">
                 Generate Gen 4 Pokemon
               </button>
-              <button
-                onClick={handleClickFive}
-                className="randomButton"
-                id="genOne"
-              >
+              <button onClick={handleClickFive} className="randomButton">
                 Generate Gen 5 Pokemon
               </button>
-              </div>
+            </div>
           </div>
         </section>
         <section className="section left-content">
@@ -255,7 +214,6 @@ function App() {
                 imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
                 id={id}
                 weight={`${weight} lbs`}
-
               />
             </div>
           </div>
