@@ -3,7 +3,20 @@
 import React from "react";
 
 //rfc for shortcut
-export default function Card(props) {
+export default function Card(props, {data}) {
+
+  async function getAbilities() {
+    await data.abilities.map(poke => {
+      return (
+        <>
+          <div className="group">
+            <h2>{poke.ability.name}</h2>
+          </div>
+        </>
+      );
+    }
+    )}
+
   return (
     <div className="card">
       <div className="card-image">
@@ -18,6 +31,7 @@ export default function Card(props) {
           <p className="subtitle is-6">No. {props.id}</p>
           <h2>{props.weight}</h2>
           <p>{props.type}</p>
+          <p>{getAbilities}</p>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
      fetch(`${url}${pokemonName}`)
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) =>  setData(data));
   }, [pokemonName]);
 
   //fetches other pokemon
@@ -23,7 +23,7 @@ function App() {
     fetch("https://pokeapi.co/api/v2/pokemon/?limit=1500&offset=0")
       .then((response) => response.json())
       .then((otherData) =>
-        setOtherPokemon(otherData.results.map((p) => p.name))
+         setOtherPokemon(otherData.results.map((p) => p.name))
       );
   }, [pokemonName]);
 
@@ -85,18 +85,6 @@ function App() {
   function handleChange() {
     setPokemonName(document.querySelector("#pokemonName").value);
   }
-
-  // function getAbilities() {
-  //   data.abilities.map(poke => {
-  //     return (
-  //       <>
-  //         <div className="group">
-  //           <h2>{poke.ability.name}</h2>
-  //         </div>
-  //       </>
-  //     );
-  //   }
-  //   )}
 
   // function capitalizeFirstLetter(string) {
   //   return string.charAt(0) + string.slice(1);
