@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#title{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(177, 10, 10);
+}
+
+body{
+    background-color: #FCEEC8;
+}
+.container{
+    width: 90%;
+    /* margin: auto; */
+    padding-top: 50px;
+    /* display: flex; */
+}
+
+.left-content,.right-content{
+    flex-basis: 50%;
+}
+.left-content{
+    left:10px;
+    margin-left: 5px;
+}
+
+.columns{
+    left: 0;
+    width: 125%;
+}
+
+.card{
+    width: 200px;
+    background-color:#9EDEF9;
+    border-radius: 1rem;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+
+.main--card .card{
+    margin: 0 100%;
+    background-color: #d5e396;
+    font-weight: bold;
+}
+
+.randomButton{
+    display: inline-block;
+    padding: 0.5em;
+    margin: 2px;
+    border-radius: 8px;
+}
+
+.right-content{
+    width: 30%;
+    text-align: center;
+    color: black;
+    position:absolute;
+    top:35em;
+    right: 2em;
+}
+
+.card img{
+    height: 3rem;
+    width: 2.5rem;
+}
+
+.card--name{
+    text-transform: uppercase;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.right-content img{
+    margin: 2.5rem;
+    height: 160px;
+}
+.right-content h1{
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.abilities .type{
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+.abilities .group .type{
+    background-color: #b74555;
+    color: white;
+    padding: 0.5rem;
+    font-size: 12px;
+    border-radius: 8px;
+    margin-left: 1rem;
+}
+.base-stat{
+    margin-top: 2rem;
+}
+.btn-group{
+    display: flex;
+}
+.btn-group button{
+    outline: none;
+    border: none;
+    width: 150px;
+    padding: 0.3rem 0;
+    margin: 1rem;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background-color: #b74555;
+    border-radius: 8px;
+}
