@@ -14,18 +14,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(`${url}${pokemonName}`);
-      result.json().then(json => {
+      result.json().then((json) => { //returns a promise and turns into json
         setData(json);
-      })
+      });
     };
-    fetchData()
-  }, [pokemonName])
-
-  // useEffect(() => {
-  //   fetch(`${url}${pokemonName}`)
-  //     .then((response) => response.json()) //returns a promise and turns into json
-  //     .then((data) => setData(data));
-  // }, [pokemonName]);
+    fetchData();
+  }, [pokemonName]);
 
   //state variable for type
   const [type, setType] = useState("");
@@ -74,49 +68,54 @@ function App() {
   // })
   // setType(pokemonName.types[0].type.name)
 
+  //Promise all
+  const [randomData, setRandomData] = useState([]);
+
+  const urls = [
+    `${url}${Math.floor(Math.random() * 151)}`,
+    `${url}${Math.floor(Math.random() * 99) + 151}`,
+    `${url}${Math.floor(Math.random() * 134) + 251}`,
+    `${url}${Math.floor(Math.random() * 106) + 386}`,
+    `${url}${Math.floor(Math.random() * 155) + 493}`,
+  ];
+
+  Promise.all(urls.map((url) => fetch(url)))
+    .then((responses) => Promise.all(responses.map((result) => result.json())))
+    .then((data) => setRandomData(data));
+
+  // console.log(randomData)
+
   //GEN ONE
   function handleClick() {
-    setPokemonName(
-      fetch(`${url}${Math.floor(Math.random() * 151)}`)
-        .then((response) => response.json())
-        .then((randomData) => setPokemonName(randomData.name))
-    );
+    setPokemonName(randomData[0].name);
   }
+
+  // function handleClick() {
+  //   setPokemonName(
+  //     fetch(`${url}${Math.floor(Math.random() * 151)}`)
+  //       .then((response) => response.json())
+  //       .then((randomData) => setPokemonName(randomData.name))
+  //   );
+  // }
 
   //GEN TWO
   function handleClickTwo() {
-    setPokemonName(
-      fetch(`${url}${Math.floor(Math.random() * 99) + 151}`)
-        .then((response) => response.json())
-        .then((randomData) => setPokemonName(randomData.name))
-    );
+    setPokemonName(randomData[1].name);
   }
 
   //GEN THREE
   function handleClickThree() {
-    setPokemonName(
-      fetch(`${url}${Math.floor(Math.random() * 134) + 251}`)
-        .then((response) => response.json())
-        .then((randomData) => setPokemonName(randomData.name))
-    );
+    setPokemonName(randomData[2].name);
   }
 
   //GEN FOUR
   function handleClickFour() {
-    setPokemonName(
-      fetch(`${url}${Math.floor(Math.random() * 106) + 386}`)
-        .then((response) => response.json())
-        .then((randomData) => setPokemonName(randomData.name))
-    );
+    setPokemonName(randomData[3].name);
   }
 
   //GEN FIVE
   function handleClickFive() {
-    setPokemonName(
-      fetch(`${url}${Math.floor(Math.random() * 155) + 493}`)
-        .then((response) => response.json())
-        .then((randomData) => setPokemonName(randomData.name))
-    );
+    setPokemonName(randomData[4].name);
   }
 
   //Updates state variable
@@ -297,17 +296,6 @@ function App() {
         <div className="right-content hero is-info">
           {/* <Info data={data}/> */}
           {/* <Info name = {name} id={id} type={typeNames}/> */}
-          {/* <Info name = {name} id={id} type={data.types[0].type.name} ability={data.abilities.map((poke) => {
-            return(
-              <>
-                <div className="group">
-                  <h2>{poke.ability.name}</h2>
-                </div>
-              </>
-            )
-          })
-          }
-          /> */}
           {/* <Info name = {name} id={id} 
           type={data.types[0].type.name}
           /> */}
