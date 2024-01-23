@@ -11,25 +11,34 @@ function App() {
 
   const url = "https://pokeapi.co/api/v2/pokemon/";
 
-  useEffect( () => {
-      fetch(`${url}${pokemonName}`)
-      .then((response) => response.json()) //returns a promise
-      .then((data) =>  setData(data));
-  }, [pokemonName]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(`${url}${pokemonName}`);
+      result.json().then(json => {
+        setData(json);
+      })
+    };
+    fetchData()
+  }, [pokemonName])
 
+  // useEffect(() => {
+  //   fetch(`${url}${pokemonName}`)
+  //     .then((response) => response.json()) //returns a promise and turns into json
+  //     .then((data) => setData(data));
+  // }, [pokemonName]);
 
   //state variable for type
-  const [type, setType] = useState('');
+  const [type, setType] = useState("");
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchType = async () => {
-      const result = await fetch(`${url}${pokemonName}`)
-      result.json().then(json => {
+      const result = await fetch(`${url}${pokemonName}`);
+      result.json().then((json) => {
         setType(json.types[0].type.name);
-      })
-    }
-      fetchType();
-  }, [pokemonName])
+      });
+    };
+    fetchType();
+  }, [pokemonName]);
 
   // const [ability, setAbilities] = useState([]);
 
@@ -37,7 +46,7 @@ function App() {
   //   const fetchAbility = async () => {
   //     const result = await fetch(`${url}${pokemonName}`)
   //     result.json().then(json => {
-  //       setAbilities(json.abilities[0].map(data => {
+  //       setAbilities(json.abilities.map(data => {
   //         data.ability.name
   //       }))
   //     })
@@ -52,7 +61,7 @@ function App() {
     fetch(`${url}?limit=1500&offset=0`)
       .then((response) => response.json())
       .then((otherData) =>
-         setOtherPokemon(otherData.results.map((p) => p.name))
+        setOtherPokemon(otherData.results.map((p) => p.name))
       );
   }, [pokemonName]);
 
