@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import "bulma/css/bulma.css";
 import "./style.css";
 import Card from "./Card";
+// import Button from "./Button";
 // import Info from "./Info";
+// import Worker from './worker.js';
 
 function App() {
   const [data, setData] = useState([]);
@@ -14,7 +16,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(`${url}${pokemonName}`);
-      result.json().then((json) => { //returns a promise and turns into json
+      result.json().then((json) => {
+        //returns a promise and turns into json
         setData(json);
       });
     };
@@ -33,22 +36,6 @@ function App() {
     };
     fetchType();
   }, [pokemonName]);
-
-  // const [ability, setAbilities] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchAbility = async () => {
-  //     const result = await fetch(`${url}${pokemonName}`)
-  //     result.json().then(json => {
-  //       setAbilities(json.abilities.map(data => {
-  //         data.ability.name
-  //       }))
-  //     })
-  //   }
-  //   fetchAbility()
-  // }, [pokemonName])
-
-  // console.log(ability)
 
   //fetches other pokemon
   const [otherPokemon, setOtherPokemon] = useState([]);
@@ -71,42 +58,41 @@ function App() {
     `${url}${Math.floor(Math.random() * 106) + 386}`,
     `${url}${Math.floor(Math.random() * 155) + 493}`,
   ];
-
+  
   Promise.all(urls.map((url) => fetch(url)))
     .then((responses) => Promise.all(responses.map((result) => result.json())))
     .then((data) => setRandomData(data));
 
-  // console.log(randomData)
-
-  // function handleClick() {
-  //   setPokemonName(
-  //     fetch(`${url}${Math.floor(Math.random() * 151)}`)
-  //       .then((response) => response.json())
-  //       .then((randomData) => setPokemonName(randomData.name))
-  //   );
+  //Worker function
+  // Worker.onMessage(function(message){
+  //   Promise.all(message.map((url) => fetch(url)))
+  //   .then((responses) => Promise.all(responses.map((result) => result.json())))
+  //   .then((data) => setRandomData(data));
   // }
+  // )
+
   //GEN ONE
-  function handleClick() {
-    setPokemonName(randomData[0].name);
+  async function handleClick() {
+   setPokemonName(randomData[0].name);
   }
 
   //GEN TWO
-  function handleClickTwo() {
+  async function handleClickTwo() {
     setPokemonName(randomData[1].name);
   }
 
   //GEN THREE
-  function handleClickThree() {
+  async function handleClickThree() {
     setPokemonName(randomData[2].name);
   }
 
   //GEN FOUR
-  function handleClickFour() {
+  async function handleClickFour() {
     setPokemonName(randomData[3].name);
   }
 
   //GEN FIVE
-  function handleClickFive() {
+  async function handleClickFive() {
     setPokemonName(randomData[4].name);
   }
 
@@ -114,23 +100,6 @@ function App() {
   function handleChange() {
     setPokemonName(document.querySelector("#pokemonName").value);
   }
-
-  // function capitalizeFirstLetter(string) {
-  //   return string.charAt(0) + string.slice(1);
-  // }
-
-  console.log(pokemonName);
-  console.log(data);
-  // console.log(ability)
-  // console.log(data.abilities[0].ability.name)
-  // console.log(data.types[0].type.name)
-  // console.log(pokemonName);
-  // console.log(data);
-  // console.log(data.id);
-  // console.log(otherPokemon[id - 6]);
-  // console.log(pokemonName.abilities.map(poke => {
-  //   poke.ability.name
-  // }))
 
   const { id, name, weight } = data;
 
@@ -147,6 +116,26 @@ function App() {
               id="pokemonName"
               placeholder="Enter Pokemon Name"
             />
+            {/* <div>
+              <Button 
+              onClick={handleClick} 
+              label="Generate Gen 1 Pokemon" />
+              <Button 
+              onClick={handleClickTwo} 
+              label="Generate Gen 2 Pokemon" />
+              <Button
+                onClick={handleClickThree}
+                label="Generate Gen 3 Pokemon"
+              />
+              <Button
+                onClick={handleClickFour}
+                label="Generate Gen 4 Pokemon"
+              />
+              <Button
+                onClick={handleClickFive}
+                label="Generate Gen 5 Pokemon"
+              />
+            </div> */}
             <div>
               <button onClick={handleClick} className="randomButton">
                 Generate Gen 1 Pokemon
