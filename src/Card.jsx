@@ -18,7 +18,7 @@ export default function Card(props, {data}) {
           <p className="title is-size-7 card--name">{props.name}</p>
           <p className="subtitle is-6">No. {props.id}</p>
           <h2>{props.weight}</h2>
-          <p className="type">{props.type} type</p>
+          <p className="type">{props.type}</p>
           {/* <p className="abilities">{props.ability}</p> */}
         </div>
       </div>

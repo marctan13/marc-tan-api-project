@@ -48,6 +48,8 @@ function App() {
   //   fetchAbility()
   // }, [pokemonName])
 
+  // console.log(ability)
+
   //fetches other pokemon
   const [otherPokemon, setOtherPokemon] = useState([]);
 
@@ -58,15 +60,6 @@ function App() {
         setOtherPokemon(otherData.results.map((p) => p.name))
       );
   }, [pokemonName]);
-
-  // const typeNames = data.types.map(type => {
-  //   return (
-  //     <>
-  //       {type.type.name}
-  //     </>
-  //   )
-  // })
-  // setType(pokemonName.types[0].type.name)
 
   //Promise all
   const [randomData, setRandomData] = useState([]);
@@ -85,11 +78,6 @@ function App() {
 
   // console.log(randomData)
 
-  //GEN ONE
-  function handleClick() {
-    setPokemonName(randomData[0].name);
-  }
-
   // function handleClick() {
   //   setPokemonName(
   //     fetch(`${url}${Math.floor(Math.random() * 151)}`)
@@ -97,6 +85,10 @@ function App() {
   //       .then((randomData) => setPokemonName(randomData.name))
   //   );
   // }
+  //GEN ONE
+  function handleClick() {
+    setPokemonName(randomData[0].name);
+  }
 
   //GEN TWO
   function handleClickTwo() {
@@ -240,7 +232,7 @@ function App() {
                 imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
                 id={id}
                 weight={`${weight} lbs`}
-                type={type}
+                type={`${type} type`}
                 // ability={ability}
               />
             </div>
