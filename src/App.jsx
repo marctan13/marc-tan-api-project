@@ -4,15 +4,18 @@ import "bulma/css/bulma.css";
 import "./style.css";
 import Card from "./Card";
 import Info from "./Info";
+// import Worker from "./Worker"
 
 function App() {
   const [data, setData] = useState([]);
   const [pokemonName, setPokemonName] = useState("pikachu");
   const [type, setType] = useState("");
   const [abilities, setAbilities] = useState([]);
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
   const [otherPokemon, setOtherPokemon] = useState([]);
   const [randomData, setRandomData] = useState([]); //array of random 5 gen pokemon
+
+
+  const url = "https://pokeapi.co/api/v2/pokemon/"
 
   const urls = [
     `${url}${Math.floor(Math.random() * 151)}`,
@@ -25,8 +28,7 @@ function App() {
   ];
 
   const { id } = data;
-  const abilityone = abilities[0];
-  const abilitytwo = abilities[1];
+  const [abilityone, abilitytwo] = abilities;
 
   //fetches api
   useEffect(() => {
@@ -54,14 +56,6 @@ function App() {
     };
     fetchData();
   }, [pokemonName]);
-
-  //Worker function
-  // Worker.onMessage(function(message){
-  //   Promise.all(message.map((url) => fetch(url)))
-  //   .then((responses) => Promise.all(responses.map((result) => result.json())))
-  //   .then((data) => setRandomData(data));
-  // }
-  // )
 
   function handleChange(e) {
     setPokemonName(e.target.value.toLowerCase());
@@ -99,6 +93,7 @@ function App() {
     <div>
       <div className="container">
         <h1 id="title">Poke API Project</h1>
+              {/* <Worker /> */}
         <section className="hero is-link">
           <div className="hero-body">
             <input

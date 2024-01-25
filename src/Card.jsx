@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-//rfc for shortcut
 export default function Card(props) {
   return (
     <div className="column is-2">
