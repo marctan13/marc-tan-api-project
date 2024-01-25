@@ -4,7 +4,6 @@ import "bulma/css/bulma.css";
 import "./style.css";
 import Card from "./Card";
 import Info from "./Info";
-// import Worker from './worker.js';
 
 function App() {
   const [data, setData] = useState([]);
@@ -64,11 +63,6 @@ function App() {
   // }
   // )
 
-  // const updateStatObject = () => {
-  //   setStats({
-  //     name: {data.stats.}
-  //   })
-  // }
   function handleChange(e) {
     setPokemonName(e.target.value.toLowerCase());
   }
@@ -122,9 +116,7 @@ function App() {
         <section className="section left-content">
           <div className="columns">{renderOtherPokemonCards()}</div>
           <div className="columns mid-container">
-            <div className="column is-4 main-container">
               <Info data={data} type={type} abilityone = {abilityone} abilitytwo= {abilitytwo}/>
-            </div>
           </div>
           <div className="columns">{renderMorePokemonCards()}</div>
         </section>
