@@ -14,8 +14,7 @@ function App() {
   const [otherPokemon, setOtherPokemon] = useState([]);
   const [randomData, setRandomData] = useState([]); //array of random 5 gen pokemon
 
-
-  const url = "https://pokeapi.co/api/v2/pokemon/"
+  const url = "https://pokeapi.co/api/v2/pokemon/";
 
   const urls = [
     `${url}${Math.floor(Math.random() * 151)}`,
@@ -23,8 +22,8 @@ function App() {
     `${url}${Math.floor(Math.random() * 135) + 251}`,
     `${url}${Math.floor(Math.random() * 107) + 386}`,
     `${url}${Math.floor(Math.random() * 156) + 493}`,
-    `${url}${Math.floor(Math.random()* 72) + 649}`,
-    `${url}${Math.floor(Math.random()* 88) + 721}`
+    `${url}${Math.floor(Math.random() * 72) + 649}`,
+    `${url}${Math.floor(Math.random() * 88) + 721}`,
   ];
 
   const { id } = data;
@@ -93,7 +92,7 @@ function App() {
     <div>
       <div className="container">
         <h1 id="title">Poke API Project</h1>
-              {/* <Worker /> */}
+        {/* <Worker /> */}
         <section className="hero is-link">
           <div className="hero-body">
             <input
@@ -103,15 +102,18 @@ function App() {
               id="pokemonName"
               placeholder="Enter Pokemon Name"
             />
-            <div className="btn-group">
-              {buttonsEl()}
-            </div>
+            <div className="btn-group">{buttonsEl()}</div>
           </div>
         </section>
         <section className="section left-content">
           <div className="columns">{renderOtherPokemonCards()}</div>
           <div className="columns mid-container">
-              <Info data={data} type={type} abilityone = {abilityone} abilitytwo= {abilitytwo}/>
+            <Info
+              data={data}
+              type={type}
+              abilityone={abilityone}
+              abilitytwo={abilitytwo}
+            />
           </div>
           <div className="columns">{renderMorePokemonCards()}</div>
         </section>
