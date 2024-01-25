@@ -9,7 +9,7 @@
     text-align: center;
     font-size: 30px;
     font-weight: bold;
-    color: rgb(177, 10, 10);
+    color: rgb(234, 14, 14);
 }
 
 body{
@@ -17,22 +17,7 @@ body{
 }
 .container{
     width: 90%;
-    /* margin: auto; */
     padding-top: 50px;
-    /* display: flex; */
-}
-
-.left-content,.right-content{
-    flex-basis: 50%;
-}
-.left-content{
-    left:10px;
-    margin-left: 5px;
-}
-
-.columns{
-    left: 0;
-    width: 125%;
 }
 
 .card{
@@ -43,26 +28,40 @@ body{
     box-sizing: border-box;
 }
 
-.main--card .card{
-    margin: 0 100%;
+.mid-container .main-container{
     background-color: #d5e396;
+}
+
+.mid-container{
+    display: flex;
+    justify-content: center;
+}
+
+.main-card{
+    display: flex;
+    margin: 0 15%;
     font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main-card img{
+    max-width: 350px;
+}
+
+.columns{
+    display: flex;
+    justify-content: center;
 }
 
 .randomButton{
-    display: inline-block;
+    display: flex;
+    align-self: center;
+    width: 50%;
     padding: 0.5em;
     margin: 2px;
     border-radius: 8px;
-}
-
-.right-content{
-    width: 30%;
-    text-align: center;
-    color: black;
-    position:absolute;
-    top:35em;
-    right: 2em;
 }
 
 .card img{
@@ -76,15 +75,6 @@ body{
     white-space: nowrap;
 }
 
-.right-content img{
-    margin: 2.5rem;
-    height: 160px;
-}
-.right-content h1{
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
 .abilities .type{
     width: 70%;
     margin: auto;
@@ -93,29 +83,55 @@ body{
     align-items: center;
     margin-top: 1rem;
 }
-.abilities .group .type{
-    background-color: #b74555;
+
+.abilities{
+    background-color: #58b0c8;
     color: white;
     padding: 0.5rem;
     font-size: 12px;
     border-radius: 8px;
     margin-left: 1rem;
+    text-transform: uppercase;
 }
+
+.main-title{
+    /* background-color: #58b0c8;
+    color: white; */
+    text-transform: uppercase;
+}
+
+.main-name{
+    font-weight: 900;
+}
+
+.main-type{
+    text-transform: uppercase;
+}
+
 .base-stat{
     margin-top: 2rem;
 }
+
 .btn-group{
     display: flex;
+    height: 5em;
+    justify-content: center;
 }
+
+button{
+    font-family: 'Roboto', sans-serif;
+}
+
 .btn-group button{
     outline: none;
     border: none;
     width: 150px;
+    height: 80px;
     padding: 0.3rem 0;
     margin: 1rem;
     font-size: 17px;
     font-weight: bold;
     color: white;
-    background-color: #b74555;
+    background-color: #643239;
     border-radius: 8px;
 }

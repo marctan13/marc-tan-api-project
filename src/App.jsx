@@ -3,65 +3,58 @@ import React, { useEffect, useState } from "react";
 import "bulma/css/bulma.css";
 import "./style.css";
 import Card from "./Card";
-// import Button from "./Button";
-// import Info from "./Info";
+import Info from "./Info";
 // import Worker from './worker.js';
 
 function App() {
   const [data, setData] = useState([]);
   const [pokemonName, setPokemonName] = useState("pikachu");
-
-  const url = "https://pokeapi.co/api/v2/pokemon/";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch(`${url}${pokemonName}`);
-      result.json().then((json) => {
-        //returns a promise and turns into json
-        setData(json);
-      });
-    };
-    fetchData();
-  }, [pokemonName]);
-
-  //state variable for type
   const [type, setType] = useState("");
-
-  useEffect(() => {
-    const fetchType = async () => {
-      const result = await fetch(`${url}${pokemonName}`);
-      result.json().then((json) => {
-        setType(json.types[0].type.name);
-      });
-    };
-    fetchType();
-  }, [pokemonName]);
-
-  //fetches other pokemon
+  const [abilities, setAbilities] = useState([]);
+  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
   const [otherPokemon, setOtherPokemon] = useState([]);
-
-  useEffect(() => {
-    fetch(`${url}?limit=1500&offset=0`)
-      .then((response) => response.json())
-      .then((otherData) =>
-        setOtherPokemon(otherData.results.map((p) => p.name))
-      );
-  }, [pokemonName]);
-
-  //Promise all
-  const [randomData, setRandomData] = useState([]);
+  const [randomData, setRandomData] = useState([]); //array of random 5 gen pokemon
 
   const urls = [
     `${url}${Math.floor(Math.random() * 151)}`,
-    `${url}${Math.floor(Math.random() * 99) + 151}`,
-    `${url}${Math.floor(Math.random() * 134) + 251}`,
-    `${url}${Math.floor(Math.random() * 106) + 386}`,
-    `${url}${Math.floor(Math.random() * 155) + 493}`,
+    `${url}${Math.floor(Math.random() * 100) + 151}`,
+    `${url}${Math.floor(Math.random() * 135) + 251}`,
+    `${url}${Math.floor(Math.random() * 107) + 386}`,
+    `${url}${Math.floor(Math.random() * 156) + 493}`,
+    `${url}${Math.floor(Math.random()* 72) + 649}`,
+    `${url}${Math.floor(Math.random()* 88) + 721}`
   ];
-  
-  Promise.all(urls.map((url) => fetch(url)))
-    .then((responses) => Promise.all(responses.map((result) => result.json())))
-    .then((data) => setRandomData(data));
+
+  const { id } = data;
+  const abilityone = abilities[0];
+  const abilitytwo = abilities[1];
+
+  //fetches api
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetch(`${url}${pokemonName}`);
+        result.json().then((json) => {
+          setData(json);
+          setType(json.types[0].type.name);
+          setAbilities(json.abilities.map((abi) => abi.ability.name));
+          fetch(`${url}?limit=1500&offset=0`)
+            .then((response) => response.json())
+            .then((otherData) =>
+              setOtherPokemon(otherData.results.map((p) => p.name))
+            );
+          Promise.all(urls.map((url) => fetch(url)))
+            .then((responses) =>
+              Promise.all(responses.map((result) => result.json()))
+            )
+            .then((data) => setRandomData(data));
+        });
+      } catch (error) {
+        console.log("failed to fetch data" + error);
+      }
+    };
+    fetchData();
+  }, [pokemonName]);
 
   //Worker function
   // Worker.onMessage(function(message){
@@ -71,37 +64,42 @@ function App() {
   // }
   // )
 
-  //GEN ONE
-  async function handleClick() {
-   setPokemonName(randomData[0].name);
+  // const updateStatObject = () => {
+  //   setStats({
+  //     name: {data.stats.}
+  //   })
+  // }
+  function handleChange(e) {
+    setPokemonName(e.target.value.toLowerCase());
   }
 
-  //GEN TWO
-  async function handleClickTwo() {
-    setPokemonName(randomData[1].name);
+  async function handleRandomClick(index) {
+    setPokemonName(randomData[index].name);
   }
 
-  //GEN THREE
-  async function handleClickThree() {
-    setPokemonName(randomData[2].name);
-  }
+  const buttonsEl = () => {
+    return randomData.map((data, index) => (
+      <button key={index} onClick={() => handleRandomClick(index)}>
+        Generate Gen {index + 1} Pokemon
+      </button>
+    ));
+  };
 
-  //GEN FOUR
-  async function handleClickFour() {
-    setPokemonName(randomData[3].name);
-  }
+  const renderOtherPokemonCards = () => {
+    return Array.from({ length: 6 }, (_, index) => (
+      <Card
+        key={index}
+        name={otherPokemon[id - index - 2]}
+        id={id - index - 1}
+      />
+    ));
+  };
 
-  //GEN FIVE
-  async function handleClickFive() {
-    setPokemonName(randomData[4].name);
-  }
-
-  //Updates state variable
-  function handleChange() {
-    setPokemonName(document.querySelector("#pokemonName").value);
-  }
-
-  const { id, name, weight } = data;
+  const renderMorePokemonCards = () => {
+    return Array.from({ length: 6 }, (_, index) => (
+      <Card key={index} name={otherPokemon[id + index]} id={id + index + 1} />
+    ));
+  };
 
   return (
     <div>
@@ -116,171 +114,20 @@ function App() {
               id="pokemonName"
               placeholder="Enter Pokemon Name"
             />
-            {/* <div>
-              <Button 
-              onClick={handleClick} 
-              label="Generate Gen 1 Pokemon" />
-              <Button 
-              onClick={handleClickTwo} 
-              label="Generate Gen 2 Pokemon" />
-              <Button
-                onClick={handleClickThree}
-                label="Generate Gen 3 Pokemon"
-              />
-              <Button
-                onClick={handleClickFour}
-                label="Generate Gen 4 Pokemon"
-              />
-              <Button
-                onClick={handleClickFive}
-                label="Generate Gen 5 Pokemon"
-              />
-            </div> */}
-            <div>
-              <button onClick={handleClick} className="randomButton">
-                Generate Gen 1 Pokemon
-              </button>
-              <button onClick={handleClickTwo} className="randomButton">
-                Generate Gen 2 Pokemon
-              </button>
-              <button onClick={handleClickThree} className="randomButton">
-                Generate Gen 3 Pokemon
-              </button>
-              <button onClick={handleClickFour} className="randomButton">
-                Generate Gen 4 Pokemon
-              </button>
-              <button onClick={handleClickFive} className="randomButton">
-                Generate Gen 5 Pokemon
-              </button>
+            <div className="btn-group">
+              {buttonsEl()}
             </div>
           </div>
         </section>
         <section className="section left-content">
-          <div className="columns">
-            <div className="column is-2">
-              {id > 4 && (
-                <Card
-                  name={otherPokemon[id - 6]}
-                  // name={otherPokemon[data.indexOf(pokemonName)]}
-                  imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                    id - 5
-                  }.png`}
-                  id={id - 5}
-                />
-              )}
-            </div>
-            <div className="column is-2">
-              {id > 4 && (
-                <Card
-                  name={otherPokemon[id - 5]}
-                  imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                    id - 4
-                  }.png`}
-                  id={id - 4}
-                />
-              )}
-            </div>
-            <div className="column is-2">
-              {id > 3 && (
-                <Card
-                  name={otherPokemon[id - 4]}
-                  imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                    id - 3
-                  }.png`}
-                  id={id - 3}
-                />
-              )}
-            </div>
-            <div className="column is-2">
-              {id > 2 && (
-                <Card
-                  name={otherPokemon[id - 3]}
-                  imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                    id - 2
-                  }.png`}
-                  id={id - 2}
-                />
-              )}
-            </div>
-            <div className="column is-2">
-              {id > 1 && (
-                <Card
-                  name={otherPokemon[id - 2]}
-                  imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                    id - 1
-                  }.png`}
-                  id={id - 1}
-                />
-              )}
+          <div className="columns">{renderOtherPokemonCards()}</div>
+          <div className="columns mid-container">
+            <div className="column is-4 main-container">
+              <Info data={data} type={type} abilityone = {abilityone} abilitytwo= {abilitytwo}/>
             </div>
           </div>
-          <div className="columns">
-            <div className="column is-4 main--card">
-              <Card
-                name={name}
-                imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
-                id={id}
-                weight={`${weight} lbs`}
-                type={`${type} type`}
-                // ability={ability}
-              />
-            </div>
-          </div>
-          <div className="columns">
-            <div className="column is-2">
-              <Card
-                name={otherPokemon[id]}
-                imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                  id + 1
-                }.png`}
-                id={id + 1}
-              />
-            </div>
-            <div className="column is-2">
-              <Card
-                name={otherPokemon[id + 1]}
-                imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                  id + 2
-                }.png`}
-                id={id + 2}
-              />
-            </div>
-            <div className="column is-2">
-              <Card
-                name={otherPokemon[id + 2]}
-                imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                  id + 3
-                }.png`}
-                id={id + 3}
-              />
-            </div>
-            <div className="column is-2">
-              <Card
-                name={otherPokemon[id + 3]}
-                imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                  id + 4
-                }.png`}
-                id={id + 4}
-              />
-            </div>
-            <div className="column is-2">
-              <Card
-                name={otherPokemon[id + 4]}
-                imgSrc={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                  id + 5
-                }.png`}
-                id={id + 5}
-              />
-            </div>
-          </div>
+          <div className="columns">{renderMorePokemonCards()}</div>
         </section>
-        <div className="right-content hero is-info">
-          {/* <Info data={data}/> */}
-          {/* <Info name = {name} id={id} type={typeNames}/> */}
-          {/* <Info name = {name} id={id} 
-          type={data.types[0].type.name}
-          /> */}
-        </div>
       </div>
     </div>
   );
