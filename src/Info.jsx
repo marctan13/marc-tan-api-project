@@ -61,6 +61,7 @@ export default function Info({ data, type, abilityone, abilitytwo }) {
 
   return (
     <>
+    <div className="columns mid-container">
       <div style={styles} className="column is-4 main-container">
         <div className="main-card">
           <div className="main-title">
@@ -76,17 +77,7 @@ export default function Info({ data, type, abilityone, abilitytwo }) {
             alt={data.name}
           />
           <p className="main-type">{type} Type</p>
-          {/* <div className="base-stat">
-          {
-            data.stats.map(poke => {
-              return (
-                <>
-                  <h3>{poke.stat.name}: {poke.base_stat}</h3>
-                </>
-              )
-            })
-          }
-        </div> */}
+        </div>
         </div>
       </div>
     </>

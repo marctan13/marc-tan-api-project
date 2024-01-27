@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Worker from "./worker?worker"
 
-export default function Worker() {
+export default function WorkerComp() {
   const [result, setResult] = useState(null);
   const [worker, setWorker] = useState(null);
 
   useEffect(() => {
-    const myWorker = new Worker('./worker.js');
+    const myWorker = new Worker();
     myWorker.postMessage(5);
     myWorker.onmessage = function (e) {
         console.log("Received result from worker.js: ", e.data)

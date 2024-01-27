@@ -4,7 +4,7 @@ import "bulma/css/bulma.css";
 import "./style.css";
 import Card from "./Card";
 import Info from "./Info";
-// import Worker from "./Worker"
+// import WorkerComp from "./Worker"
 
 function App() {
   const [data, setData] = useState([]);
@@ -29,7 +29,6 @@ function App() {
   const { id } = data;
   const [abilityone, abilitytwo] = abilities;
 
-  //fetches api
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,7 +62,7 @@ function App() {
   async function handleRandomClick(index) {
     setPokemonName(randomData[index].name);
   }
-
+  //render buttons
   const buttonsEl = () => {
     return randomData.map((data, index) => (
       <button key={index} onClick={() => handleRandomClick(index)}>
@@ -71,7 +70,7 @@ function App() {
       </button>
     ));
   };
-
+  //render cards
   const renderOtherPokemonCards = () => {
     return Array.from({ length: 6 }, (_, index) => (
       <Card
@@ -81,7 +80,7 @@ function App() {
       />
     ));
   };
-
+  //render cards
   const renderMorePokemonCards = () => {
     return Array.from({ length: 6 }, (_, index) => (
       <Card key={index} name={otherPokemon[id + index]} id={id + index + 1} />
@@ -92,7 +91,7 @@ function App() {
     <div>
       <div className="container">
         <h1 id="title">Poke API Project</h1>
-        {/* <Worker /> */}
+        {/* <WorkerComp /> */}
         <section className="hero is-link">
           <div className="hero-body">
             <input
@@ -107,14 +106,12 @@ function App() {
         </section>
         <section className="section left-content">
           <div className="columns">{renderOtherPokemonCards()}</div>
-          <div className="columns mid-container">
-            <Info
-              data={data}
-              type={type}
-              abilityone={abilityone}
-              abilitytwo={abilitytwo}
-            />
-          </div>
+          <Info
+            data={data}
+            type={type}
+            abilityone={abilityone}
+            abilitytwo={abilitytwo}
+          />
           <div className="columns">{renderMorePokemonCards()}</div>
         </section>
       </div>
